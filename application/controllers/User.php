@@ -10,6 +10,12 @@ class User extends CI_Controller {
 	public function saveInfo()
 	{
 		$infoTemp = file_get_contents("php://input");
+
+		if(!$infoTemp){
+			$result = array("status"=>1,'info'=>"no params");
+			exit(json_encode($result));
+		}
+		
 		$info = json_decode($infoTemp,true);
 		$info['privilege'] = json_encode($info['privilege']);
 
