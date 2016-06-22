@@ -14,7 +14,9 @@ class Goods extends CI_Controller
 		获取目前上品列表
 	 */
 	public function getGoods(){
-		$goods = $this->goods_model->getGoods();
+		$orderKey = $this->input->get_post("orderKey");
+		$orderType = $this->input->get_post("orderType");
+		$goods = $this->goods_model->getGoods($orderKey,$orderType);
 		exit(json_encode($goods));
 	}
 
@@ -23,8 +25,13 @@ class Goods extends CI_Controller
 		购买商品
 	 */
 	public function buyGoods(){
-		$unionid = $this->input->get_post("unionid");
+		$openId = $this->input->get_post("openId");
+		$unionId = $this->input->get_post("unionId");
 		$goodsId = $this->input->get_post("goodsId");
+		$goodsAmount = $this->input->get_post("goodsAmount");
+		$res = $this->goods_model->setOrders($openId,$unionId,intval($goodsId),intval($goodsAmount));
+		exit(json_encode($res));
+
 	}
 
 }

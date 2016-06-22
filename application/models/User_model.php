@@ -19,7 +19,6 @@ class User_model extends CI_Model {
 			return $result;	
 		}
 
-
 		$result = array("status"=>1,"info"=>"数据库错误");
 		return $result;
 
