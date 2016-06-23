@@ -22,7 +22,7 @@
 
  	
  	public function getOneGoodsDetail($goodsId){
- 		$sql = "SELECT `id`,`goods_name`,`price`,`buyer_amount`,`current_buyer_amount`,`schedule`,`status` FROM `goods` where `id` = $goodsId";
+ 		$sql = "SELECT `id`,`goods_name`,`goods_pic_url`,`price`,`buyer_amount`,`current_buyer_amount`,`schedule`,`status` FROM `goods` where `id` = $goodsId";
  		$goodsInfo = $this->db->query($sql)->result_array();
  		$sql = "SELECT `unionId`,`amount`,`create_time` FROM `orders` WHERE `goods_id` = $goodsId";
  		$orderInfo = $this->db->query($sql)->result_array();
