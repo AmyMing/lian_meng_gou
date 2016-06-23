@@ -16,6 +16,18 @@
  		return $res;
  	}
 
+ 	
+ 	public function getOneGoodsDetail($goodsId){
+ 		$sql = "SELECT `id`,`goods_name`,`price`,`buyer_amount`,`current_buyer_amount`,`schedule`,`status` FROM `goods` where `id` = $goodsId";
+ 		$goodsInfo = $this->db->query($sql)->result_array();
+ 		$sql = "SELECT `unionId`,`amount`,`create_time` FROM `orders` WHERE `goods_id` = $goodsId";
+ 		$orderInfo = $this->db->query($sql)->result_array();
+ 	
+ 		$res['goodsInfo'] = $goodsInfo;
+ 		$res['orderInfo'] = $orderInfo;
+ 		return $res;
+ 	}
+
  	public function setOrders($openId,$unionId,$goodsId,$goodsAmount){
 
  		//执行事务  插入到订单表  并更新商品表
@@ -30,9 +42,12 @@
  			if($goodsAmount == 0){
  				$res['status'] = 1;
  				$res['info'] = 'No Product';
+ 				return $res;
  			}
  			else{
- 				$res['status'] = 'More than total';
+ 				$res['status'] = 1 ;
+ 				$res['info'] = 'More than total';
+ 				return $res;
  			}
  		}
  		else{

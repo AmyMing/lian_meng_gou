@@ -20,6 +20,15 @@ class Goods extends CI_Controller
 		exit(json_encode($goods));
 	}
 
+	/*
+		获取某商品的详情
+	 */
+	public function getOneGoodsDetail(){
+		$goodsId = $this->input->get_post("goodsId");
+		$res = $this->goods_model->getOneGoodsDetail($goodsId);
+		exit(json_encode($res));
+	}
+
 
 	/*
 		购买商品
