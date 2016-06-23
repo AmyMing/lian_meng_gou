@@ -5,6 +5,10 @@
  class Goods_model extends CI_Model
  {
  	public function getGoods($orderKey='create_time',$orderType='desc'){
+ 		if(!isset($orderKey))
+ 			$orderKey = 'create_time';
+ 		if(!isset($orderType))
+ 			$orderType = 'desc';
  		$orderKeysList = array("id","price","current_buyer_amount","create_time");
  		$orderTypeList = array("desc","asc");
  		if(in_array($orderKey, $orderKeysList) && in_array($orderType, $orderTypeList)){
