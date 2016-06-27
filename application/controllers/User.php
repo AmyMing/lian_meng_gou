@@ -9,12 +9,11 @@ class User extends CI_Controller {
 		$this->load->model("user_model");
 	}
 
+	
 	/*
-		微信登录,保存微信返回的用户信息
-		wxInfo 客户端传来的用户信息 json结构
+		平台登录 保存平台返回的用户信息
 	 */
-	public function saveInfo()
-	{
+	public function saveInfo(){
 		$infoTemp = file_get_contents("php://input");
 
 		if(!$infoTemp){
@@ -23,15 +22,12 @@ class User extends CI_Controller {
 		}
 
 		$info = json_decode($infoTemp,true);
-		$info['privilege'] = json_encode($info['privilege']);
-
-		$unionid  = $info['unionid'];
-			
-		$result = $this->user_model->saveUsers($unionid,$info);
+		$result = $this->user_model->saveUsers($info);
 
 		//$this->load->library('session');
 		//$this->session->set_userdata($info);
 
 		exit(json_encode($result));
 	}
+
 }
