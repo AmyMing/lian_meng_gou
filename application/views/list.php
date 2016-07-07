@@ -68,9 +68,9 @@
     <td><?php echo $item['intro'][0]['goods_name'];?></td>
     <td><?php echo $item['intro'][0]['type'];?></td>
     <td><?php echo $item['current_amount'];?></td>
-    <td><?php echo $item['amount'];?></td>
+    <td><?php echo $item['limit_amount'];?></td>
     <td><?php echo $item['current_amount'];?></td>
-    <td><?php echo $item['current_amount']/$item['amount'];?></td>
+    <td><?php echo $item['current_amount']/$item['limit_amount'];?></td>
   </tr>
   <?php endforeach;?>
   </tbody>
