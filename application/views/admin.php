@@ -42,7 +42,7 @@
           <li class="admin-parent">
             <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}" ><span class="am-icon-file"></span> 商品模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
             <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-              <li><a href="goodsList" class="am-cf"><span class="am-icon-list"></span> 商品列表</a></li>
+              <li><a href="goodsList" class="am-cf"><span class="am-icon-list"></span> 期数列表</a></li>
               <li><a href="addIndex"><span class="am-icon-puzzle-piece"></span> 添加商品</a></li>
               <li><a href="insertIndex"><span class="am-icon-pencil"></span>插入商品</a></li>
           </ul>
