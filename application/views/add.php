@@ -35,14 +35,14 @@
 
 <div class="am-cf admin-main">
     <!-- sidebar start -->
-    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+        <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
       <div class="am-offcanvas-bar admin-offcanvas-bar">
         <ul class="am-list admin-sidebar-list">
           <li><a href="admin-index.html"><span class="am-icon-home"></span> 首页</a></li>
           <li class="admin-parent">
             <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}" ><span class="am-icon-file"></span> 商品模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
             <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-              <li><a href="admin-user.html" class="am-cf"><span class="am-icon-list"></span> 商品列表</a></li>
+              <li><a href="goodsList" class="am-cf"><span class="am-icon-list"></span> 商品列表</a></li>
               <li><a href="addIndex"><span class="am-icon-puzzle-piece"></span> 添加商品</a></li>
               <li><a href="insertIndex"><span class="am-icon-pencil"></span>插入商品</a></li>
           </ul>
