@@ -68,7 +68,7 @@
  		$orderKeysList = array("id","price","current_buyer_amount","create_time");
  		$orderTypeList = array("desc","asc");
  		if(in_array($orderKey, $orderKeysList) && in_array($orderType, $orderTypeList)){
- 			$sql = "SELECT a.* ,b.* FROM `new_goods_info` as a,`goods` AS b WHERE a.amount != a.current_amount and a.goods_id = b.id  ORDER BY b.type desc ";
+ 			$sql = "SELECT a.* ,b.* FROM `new_goods_info` as a,`goods` AS b WHERE a.limit_amount != a.current_amount and a.goods_id = b.id  ORDER BY b.type desc ";
 	 		$res = $this->db->query($sql)->result_array();
 	 		foreach ($res as $key => $value) {
 	 			$picList = explode(',',$value['goods_pic_url']);
