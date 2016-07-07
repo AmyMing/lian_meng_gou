@@ -55,10 +55,37 @@
  		$orderKeysList = array("id","price","current_buyer_amount","create_time");
  		$orderTypeList = array("desc","asc");
  		if(in_array($orderKey, $orderKeysList) && in_array($orderType, $orderTypeList)){
- 			$sql = "SELECT * FROM `goods` WHERE `status` = 0 ORDER BY $orderKey $orderType";
+ 			$sql = "SELECT a.* ,b.* FROM `new_goods_info` as a,`goods` AS b WHERE a.amount != a.current_amount and a.goods_id = b.id  ORDER BY b.type desc ";
 	 		$res = $this->db->query($sql)->result_array();
+	 		foreach ($res as $key => $value) {
+	 			$picList = explode(',',$value['goods_pic_url']);
+	 			$detailPicList = explode(',', $value['goods_detail_pic_url']);
+	 			$res[$key]['frontCover'] = $picList[0];
+	 			$res[$key]['goods_pic_url'] = $picList;
+	 			$res[$key]['goods_detail_pic_url'] = $detailPicList;
+	 			unset($res[$key]['id']);
+	 			unset($res[$key]['publisher_name']);
+	 			unset($res[$key]['amount']);
+	 			unset($res[$key]['times_id']);
+	 			$sql = "SELECT count(*) as count FROM `new_goods_info` WHERE `goods_id` = ".$value['goods_id'];
+	 			$count = $this->db->query($sql)->row()->count;
+	 			$res[$key]['product_times'] = $count;
+	 			$res[$key]['orders_info'] = array(
+	 				"do_i_in"=>true,
+	 				'my_num'=>1111,
+	 				'Winning'=>array(
+	 					"winer_name"=>"wuyingming",
+	 					"winer_id"=>111,
+	 					"winer_pic"=>'1111',
+	 					"winer_address"=>"sssss",
+	 					"winer_times"=>1,
+	 					"winning_time"=>1111111,
+	 					"Winning_no"=>1111111222));
+
+	 		}
 	 		return $res;
  		}
+
  		$res = array("status"=>"1","info"=>"非搜索关键字");
  		return $res;
  	}
