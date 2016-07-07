@@ -33,6 +33,7 @@ class Admin extends CI_Controller
 
 	public function insertIndex(){
 		$this->load->view("insert.php");
+		
 	}
 	/*
 		添加商品
