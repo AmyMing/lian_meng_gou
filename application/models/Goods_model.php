@@ -7,13 +7,26 @@
 
  	public function insertGoods($params){
 
- 		$res = $this->db->insert('goods',$params);
- 		if($res){
- 			echo "添加成功";
+ 		$this->db->trans_start();
+
+
+		$res = $this->db->insert('goods',$params);
+		if($res){
+ 			$newParams['goods_id'] = $this->db->insert_id();
+ 			$newParams['current_times'] = 1;
+ 			$newParams['limit_amount'] = $params['limit_amount'];
+ 			$newParams['current_amount'] = 0 ;
+ 			$this->db->insert("new_goods_info",$newParams);
+ 			$id = $this->db->insert_id();
+ 			if($id){
+ 				echo "添加成功";	
+ 			}
+ 			else{
+ 				echo "添加失败,数据回滚";
+ 			}
  		}
- 		else{
- 			echo "添加失败";
- 		}
+ 		
+		$this->db->trans_complete();
  	}
 
  	public function addGoodsTimes($goods_id,$amount){
