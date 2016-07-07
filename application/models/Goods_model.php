@@ -5,11 +5,9 @@
  class Goods_model extends CI_Model
  {
 
- 	public function insertGoods($goods_name,$goods_pic_url,$type,$publisher_name,$goods_intro=''){
+ 	public function insertGoods($params){
 
- 		$params = array("goods_name"=>$goods_name,"goods_pic_url"=>$goods_pic_url,"publisher_name"=>$publisher_name,"type"=>$type,"goods_intro"=>$goods_intro);
-
- 		$res = $this->db->insert('new_goods',$params);
+ 		$res = $this->db->insert('goods',$params);
  		if($res){
  			echo "添加成功";
  		}
@@ -42,11 +40,13 @@
  		$sql = "SELECT * FROM new_goods_info ";
  		$res = $this->db->query($sql)->result_array();
  		foreach ($res as $key => $value) {
- 			$sql = "SELECT * FROM `new_goods` WHERE `id` = ".$value['goods_id'];
+ 			$sql = "SELECT * FROM `goods` WHERE `id` = ".$value['goods_id'];
  			$res[$key]['intro'] = $this->db->query($sql)->result_array();
  		}
 		return $res;
  	}
+
+
  	public function getGoods($orderKey='create_time',$orderType='desc'){
  		if(!isset($orderKey))
  			$orderKey = 'create_time';

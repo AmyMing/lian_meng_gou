@@ -85,28 +85,47 @@
         <div class="am-u-sm-10">
           <input type="text" id="doc-ipt-3" name='goods_name' placeholder="请输入商品名称">
       </div>
+    </div>
+     <div class="am-form-group">
+        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">价格</label>
+        <div class="am-u-sm-10">
+          <input type="text" id="doc-ipt-3" name='price' placeholder="请输入价格">
+      </div>
+    </div>
+
+  <div class="am-form-group">
+    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">商品展示图片</label>
+    <div class="am-u-sm-10">
+      <input type="text" id="doc-ipt-pwd-2" name="goods_pic_url" placeholder="多张图片用,隔开">
+    </div>
   </div>
 
   <div class="am-form-group">
-    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">商品图片链接</label>
+    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">图片详情连接</label>
     <div class="am-u-sm-10">
-      <input type="text" id="doc-ipt-pwd-2" name="goods_pic_url" placeholder="请输入图片链接">
+      <input type="text" id="doc-ipt-pwd-2" name="goods_detail_pic_url" placeholder="多张图片用,隔开">
     </div>
   </div>
 
   <div class="am-form-group">
   <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">类别</label>
       <label class="am-radio-inline">
-        <input type="radio"  value="1" name="Type"> 点券
+        <input type="radio"  value="1" name="type"> 点券
       </label>
       <label class="am-radio-inline">
-        <input type="radio"   value="2"  name="Type"> 手办
+        <input type="radio"   value="2"  name="type"> 手办
       </label>
       <label class="am-radio-inline">
-        <input type="radio"   value="3"  name="Type"> 娃娃
+        <input type="radio"   value="3"  name="type"> 娃娃
       </label>
   </div>
 
+  <div class="am-form-group">
+    <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">限定人数</label>
+    <div class="am-u-sm-10">
+      <input type="text" id="doc-ipt-pwd-2" name="limit_amount" placeholder="请输入限定的人数">
+    </div>
+  </div>
 
 
   <div class="am-form-group">
