@@ -59,16 +59,18 @@
 		return $res;
  	}
 
-
- 	public function getGoods($orderKey='create_time',$orderType='desc'){
+ 	public function getGoods($page,$orderKey,$orderType){
+ 		if(!isset($page))
+ 			$page = 1;
  		if(!isset($orderKey))
  			$orderKey = 'create_time';
  		if(!isset($orderType))
  			$orderType = 'desc';
+ 		$pageSize = 20 ;
  		$orderKeysList = array("id","price","current_buyer_amount","create_time");
  		$orderTypeList = array("desc","asc");
  		if(in_array($orderKey, $orderKeysList) && in_array($orderType, $orderTypeList)){
- 			$sql = "SELECT a.* ,b.* FROM `new_goods_info` as a,`goods` AS b WHERE a.limit_amount != a.current_amount and a.goods_id = b.id  ORDER BY b.type desc ";
+ 			$sql = "SELECT a.* ,b.* FROM `new_goods_info` as a,`goods` AS b WHERE a.limit_amount != a.current_amount and a.goods_id = b.id  ORDER BY b.type desc LIMIT ".$pageSize*($page-1).",".$pageSize*$page;
 	 		$res = $this->db->query($sql)->result_array();
 	 		foreach ($res as $key => $value) {
 	 			$picList = explode(',',$value['goods_pic_url']);
@@ -79,24 +81,31 @@
 	 			unset($res[$key]['id']);
 	 			unset($res[$key]['publisher_name']);
 	 			unset($res[$key]['amount']);
-	 			unset($res[$key]['times_id']);
+	 			unset($res[$key]['create_time']);
+	 			unset($res[$key]['current_times']);
 	 			$sql = "SELECT count(*) as count FROM `new_goods_info` WHERE `goods_id` = ".$value['goods_id'];
 	 			$count = $this->db->query($sql)->row()->count;
 	 			$res[$key]['product_times'] = $count;
-	 			$res[$key]['orders_info'] = array(
-	 				"do_i_in"=>true,
-	 				'my_num'=>1111,
-	 				'Winning'=>array(
-	 					"winer_name"=>"wuyingming",
-	 					"winer_id"=>111,
-	 					"winer_pic"=>'1111',
-	 					"winer_address"=>"sssss",
-	 					"winer_times"=>1,
-	 					"winning_time"=>1111111,
-	 					"Winning_no"=>1111111222));
 
 	 		}
-	 		return $res;
+	 		
+	 		$sql = "SELECT count(*) AS 'count' FROM `new_goods_info` WHERE 1";
+	 		$count = $this->db->query($sql)->row()->count;
+	 		if($count%$pageSize){
+
+	 			$totalPage = floor($count/$pageSize)+1;
+	 		}
+	 		else{
+	 			$totalPage = $count/$pageSize;
+	 		}
+	 		
+	 		$goodsList = array(
+	 			"totalPage"=>$totalPage,
+	 			"currentPage"=>$page,
+	 			"goodsInfo"=>$res
+	 			);
+	 		return $goodsList;
+	 		
  		}
 
  		$res = array("status"=>"1","info"=>"非搜索关键字");
@@ -104,15 +113,39 @@
  	}
 
  	
- 	public function getOneGoodsDetail($goodsId){
- 		$sql = "SELECT `id`,`goods_name`,`goods_pic_url`,`price`,`buyer_amount`,`current_buyer_amount`,`schedule`,`status` FROM `goods` where `id` = $goodsId";
- 		$goodsInfo = $this->db->query($sql)->result_array();
- 		$sql = "SELECT `unionId`,`amount`,`create_time` FROM `orders` WHERE `goods_id` = $goodsId";
- 		$orderInfo = $this->db->query($sql)->result_array();
- 	
- 		$res['goodsInfo'] = $goodsInfo;
- 		$res['orderInfo'] = $orderInfo;
+ 	public function getOneGoodsDetail($userId,$times_id){
+ 		
+ 		$sql = "SELECT a.*,b.* FROM `new_goods_info` as a ,`goods` AS b WHERE a.times_id = $times_id and a.goods_id = b.id";
+ 		$goodsInfo = $this->db->query($sql)->row_array();
+
+ 		//我是否参与了此次
+ 		$sql = "SELECT * FROM `new_orders` WHERE `lianmeng_id` = '$userId' and `times_id` = $times_id";
+
+ 		$havaIJoined = $this->db->query($sql)->result_array();
+ 		
+ 		if($havaIJoined){
+ 			//我已经参与了
+ 			$myNumbers = '';
+ 			$orderCount = 0;
+ 			foreach ($havaIJoined as $key => $value) {
+ 				$myNumbers .= $value['numbers']." ";
+ 				$orderCount += $value['order_amount'];
+ 			}
+ 			$joinedInfo = array(
+ 				"in"=>true,
+ 				'myNumbers'=>$myNumbers,
+ 				'orderCount'=>$orderCount
+ 				);
+ 		}
+
+
+ 		$res = array(
+ 			"goodsInfo"=>$goodsInfo,
+ 			"joinedInfo"=>$joinedInfo,
+ 			);
  		return $res;
+ 		
+ 		
  	}
 
  	public function setOrders($openId,$unionId,$goodsId,$goodsAmount){

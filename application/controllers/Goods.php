@@ -10,13 +10,17 @@ class Goods extends CI_Controller
 		parent::__construct();
 		$this->load->model('goods_model');
 	}
+
+
+
 	/*
 		获取目前上品列表
 	 */
 	public function getGoods(){
+		$page = $this->input->get_post("page");
 		$orderKey = $this->input->get_post("orderKey");
 		$orderType = $this->input->get_post("orderType");
-		$goods = $this->goods_model->getGoods($orderKey,$orderType);
+		$goods = $this->goods_model->getGoods($page,$orderKey,$orderType);
 		exit(json_encode($goods));
 	}
 
@@ -24,9 +28,18 @@ class Goods extends CI_Controller
 		获取某商品的详情
 	 */
 	public function getOneGoodsDetail(){
-		$goodsId = $this->input->get_post("goodsId");
-		$res = $this->goods_model->getOneGoodsDetail($goodsId);
+		$userId = $this->input->get_post("userId");
+		$timesId = $this->input->get_post("timesId");
+		$res = $this->goods_model->getOneGoodsDetail($userId,$timesId);
 		exit(json_encode($res));
+	}
+
+	/*
+		获取某期数的详情信息
+		主要用于刷新  当前参与人数  我有没有参与此次夺宝
+	 */
+	public function fresh(){
+
 	}
 
 
