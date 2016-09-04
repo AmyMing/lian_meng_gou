@@ -114,9 +114,17 @@
 
  	
  	public function getOneGoodsDetail($userId,$times_id){
- 		
  		$sql = "SELECT a.*,b.* FROM `new_goods_info` as a ,`goods` AS b WHERE a.times_id = $times_id and a.goods_id = b.id";
  		$goodsInfo = $this->db->query($sql)->row_array();
+ 		$temp = $goodsInfo['goods_pic_url'];
+ 		$goods_pic_url = explode(',', $temp);
+ 		$goodsInfo['goods_pic_url'] = $goods_pic_url;
+ 		$temp = $goodsInfo['goods_detail_pic_url'];
+ 		$goods_detail_pic_url = explode(',', $temp);
+ 		$goodsInfo['goods_detail_pic_url'] = $goods_detail_pic_url;
+ 		unset($goodsInfo['id']);
+ 		unset($goodsInfo['create_time']);
+ 		unset($goodsInfo['publisher_name']);
 
  		//我是否参与了此次
  		$sql = "SELECT * FROM `new_orders` WHERE `lianmeng_id` = '$userId' and `times_id` = $times_id";
@@ -137,6 +145,9 @@
  				'orderCount'=>$orderCount
  				);
  		}
+ 		else{
+ 			$joinedInfo = [];
+ 		}
 
 
  		$res = array(
@@ -144,7 +155,6 @@
  			"joinedInfo"=>$joinedInfo,
  			);
  		return $res;
- 		
  		
  	}
 
