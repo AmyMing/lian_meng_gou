@@ -12,12 +12,14 @@ class Orders extends CI_Controller
 	}
 
 	public function setOrders(){
-		$userId = $this->input->get_post("userId");
-		$timesId = $this->input->get_post("timesId");
-		$amount = $this->input->get_post("amount");
-		$clientTime = $this->input->get_post("clientTime");
 
-		$res = $this->orders_model->setOrders($userId,$timesId,$amount,$clientTime);
+		$params = file_get_contents('php://input');
+		
+		$paramsArr = json_decode($params,true);
+		$userId = $paramsArr['userId'];
+		$orderList = $paramsArr['orderList'];
+		
+		$res = $this->orders_model->setOrders($userId,$orderList);
 		echo json_encode($res);
 	}
 
